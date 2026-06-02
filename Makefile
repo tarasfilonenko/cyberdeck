@@ -1,4 +1,4 @@
-.PHONY: test test-deps test-env flash deploy
+.PHONY: test test-deps test-env deploy
 
 PI_HOST ?= cyberdeck.local
 
@@ -15,11 +15,6 @@ test-env: test-deps
 test: test-env
 	docker build -t cyberdeck-test -f os/tests/Dockerfile .
 	docker run --rm cyberdeck-test bats os/tests/
-
-# Flash and pre-configure a Raspberry Pi OS image onto an SD card or USB SSD
-# Override the image:  IMAGE=/path/to.img make flash
-flash:
-	@chmod +x os/scripts/flash.sh && os/scripts/flash.sh
 
 # Run setup on a real Pi over SSH (set PI_HOST=<hostname or IP>)
 deploy:

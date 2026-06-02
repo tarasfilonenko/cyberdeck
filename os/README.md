@@ -10,22 +10,18 @@ Step-by-step guide to configure Raspberry Pi OS for the cyberdeck.
 
 ## 1. Flash Raspberry Pi OS
 
-Run the automated flash script from this repo (insert your SD card or USB SSD first):
-
-```bash
-make flash
-```
-
-The script will prompt for hostname, username, password, Wi-Fi (optional), and target device. It checks that rpi-imager is available (offers to install via Homebrew), rejects devices larger than 128 GiB to guard against wiping an HDD, downloads the Raspberry Pi OS 64-bit image, flashes it, and injects first-boot configuration into the boot partition.
-
-To use a pre-downloaded image:
-
-```bash
-IMAGE=/path/to/raspios.img make flash
-```
-
-Alternatively, use the **Raspberry Pi Imager** GUI manually:  
+Download and install the **Raspberry Pi Imager**:  
 https://www.raspberrypi.com/software/
+
+In the Imager:
+1. **Device:** Raspberry Pi 4
+2. **OS:** Raspberry Pi OS (64-bit) — *Bookworm or later*
+3. **Storage:** your SD card or SSD
+4. Click the gear icon (⚙) to pre-configure:
+   - Set hostname, username, and password
+   - Enable SSH
+   - Configure Wi-Fi if needed
+5. Write the image
 
 > The default config path changed in Bookworm: it is now `/boot/firmware/` instead of `/boot/`.  
 > Reference: https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#updating-the-bootloader
@@ -64,12 +60,11 @@ sudo reboot
 
 ## What the setup script does
 
-| Script | Runs on | What it does |
-|--------|---------|-------------|
-| `flash.sh` | Host (Mac/Linux) | Downloads Raspberry Pi OS, flashes SD card, injects first-boot config |
-| `display.sh` | Pi | Sets HDMI output for GeeekPi 10.1" 1024×600 |
-| `i2c.sh` | Pi | Enables I2C bus and installs `i2c-tools` |
-| `usb-hub.sh` | Pi | Installs udev rules, disables USB autosuspend |
+| Script | What it does |
+|--------|-------------|
+| `display.sh` | Sets HDMI output for GeeekPi 10.1" 1024×600 |
+| `i2c.sh` | Enables I2C bus and installs `i2c-tools` |
+| `usb-hub.sh` | Installs udev rules, disables USB autosuspend |
 
 All scripts are idempotent — safe to run multiple times.
 
