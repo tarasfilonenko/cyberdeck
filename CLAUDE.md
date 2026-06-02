@@ -12,13 +12,19 @@ Only add content for hardware or software that is confirmed to be part of the bu
 
 ## Adding OS scripts
 
-Each script in `os/scripts/` must:
+Scripts in `os/scripts/` fall into two categories:
 
+**Pi setup scripts** (run on the Pi via `setup.sh` — e.g. `display.sh`, `i2c.sh`, `usb-hub.sh`) must:
 - Be **idempotent** — safe to run multiple times without side effects
+- Have corresponding bats tests in `os/tests/` — add or update tests when the script changes
 - Have a corresponding doc in `docs/` explaining what it does, how to verify it worked, and how to troubleshoot
 - Reference the upstream source or documentation it is based on (link in script comments or the corresponding doc)
 - Be listed in `os/scripts/setup.sh` and in the table in `os/README.md`
-- Have corresponding bats tests in `os/tests/` — when a script is added or modified, its tests must be added or updated to match
+
+**Host utilities** (run on a dev machine — e.g. `flash.sh`, `install.sh`) must:
+- Have a corresponding doc in `docs/`
+- Be listed in the table in `os/README.md`
+- No bats tests required — these are one-time or infrequent operations
 
 ## Adding docs
 
