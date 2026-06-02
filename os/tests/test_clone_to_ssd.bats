@@ -2,13 +2,13 @@
 
 SCRIPT=/cyberdeck/os/scripts/clone-to-ssd.sh
 
-@test "clone-to-ssd: exits 0 when no SSD connected after prompt" {
-  run bash -c "echo '' | env SSD_DEV=/dev/nonexistent '$SCRIPT'"
+@test "clone-to-ssd: exits 0 when no SSD connected" {
+  run env SSD_DEV=/dev/nonexistent "$SCRIPT"
   [ "$status" -eq 0 ]
 }
 
-@test "clone-to-ssd: prints skip message when SSD still absent after prompt" {
-  run bash -c "echo '' | env SSD_DEV=/dev/nonexistent '$SCRIPT'"
+@test "clone-to-ssd: prints skip message when no SSD connected" {
+  run env SSD_DEV=/dev/nonexistent "$SCRIPT"
   [[ "$output" == *"skipping"* ]]
 }
 

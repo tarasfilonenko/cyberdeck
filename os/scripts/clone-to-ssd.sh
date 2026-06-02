@@ -16,10 +16,12 @@ if [[ "${ROOT_DEV}" == "${SSD_DEV}" ]]; then
   exit 0
 fi
 
-# No SSD connected — prompt to connect, then recheck once
+# No SSD connected — prompt if interactive, skip silently if not
 if [[ ! -b "${SSD_DEV}" ]]; then
   echo "==> No SSD detected at ${SSD_DEV}"
-  read -r -p "    Connect the SSD via USB enclosure and press Enter to continue (Ctrl+C to skip): "
+  if [[ -t 0 ]]; then
+    read -r -p "    Connect the SSD via USB enclosure and press Enter to continue (Ctrl+C to skip): "
+  fi
   if [[ ! -b "${SSD_DEV}" ]]; then
     echo "==> SSD still not detected — skipping clone"
     exit 0

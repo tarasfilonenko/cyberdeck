@@ -33,15 +33,6 @@ cyberdeck/
 
 See [os/README.md](os/README.md) for the full setup guide — flashing the SD card, running the bootstrap, and switching to SSD boot.
 
-## Make targets
-
-Run from the repo root with `make -C os <target>`, or from the `os/` directory with `make <target>`.
-
-| Target | What it does |
-|--------|-------------|
-| `make -C os deploy PI_HOST=<ip>` | Run setup on a live Pi over SSH |
-| `make -C os test` | Run all bats tests in Docker (starts Colima if needed) |
-| `make -C os test-deps` | Install Colima + Docker via Homebrew |
 
 ## Docs
 
