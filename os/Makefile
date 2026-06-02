@@ -18,6 +18,10 @@ test: test-env
 	docker build -t cyberdeck-test -f tests/Dockerfile ..
 	docker run --rm cyberdeck-test bats os/tests/
 
-# Run setup on a real Pi over SSH (set PI_HOST=<hostname or IP>)
+# Full initial setup: clones repo to /opt/cyberdeck and runs all scripts
 deploy:
 	ssh $(PI_USER)@$(PI_HOST) 'curl -fsSL https://raw.githubusercontent.com/tarasfilonenko/cyberdeck/main/os/scripts/install.sh | sudo bash'
+
+# Run a single script from the already-cloned repo: make deploy-display, make deploy-i2c, etc.
+deploy-%:
+	ssh $(PI_USER)@$(PI_HOST) 'sudo /opt/cyberdeck/os/scripts/$*.sh'

@@ -111,11 +111,12 @@ i2cdetect -y 1
 
 ## Make targets
 
-Run from the `os/` directory, or from the repo root with `make -C os <target>`.
+Run from the repo root or the `os/` directory — the root `Makefile` forwards all targets to `os/Makefile`.
 
 | Target | What it does |
 |--------|-------------|
-| `make deploy PI_HOST=<ip> PI_USER=<user>` | Run setup on a live Pi over SSH (default user: `cyberdeck`) |
+| `make deploy PI_HOST=<ip> PI_USER=<user>` | Full initial setup: clones repo to `/opt/cyberdeck` and runs all scripts (default user: `cyberdeck`) |
+| `make deploy-<script> PI_HOST=<ip>` | Run a single script on the Pi — e.g. `make deploy-display` or `make deploy-docker` (requires prior `make deploy`) |
 | `make test` | Run all bats tests in Docker (starts Colima if needed) |
 | `make test-deps` | Install Colima + Docker via Homebrew |
 
