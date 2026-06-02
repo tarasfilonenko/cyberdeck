@@ -28,7 +28,9 @@ In the Imager:
 
 ## 2. Boot and connect
 
-Insert the SD card, connect power, and SSH in:
+> **The first boot always happens from the SD card.** The setup script will configure USB boot and clone to the SSD — after the first reboot the Pi runs from the SSD and the SD card can be removed.
+
+Insert the SD card (SSD connected via USB enclosure), connect power, and SSH in:
 
 ```bash
 ssh <username>@<hostname>.local
@@ -47,16 +49,42 @@ Reference: https://www.raspberrypi.com/documentation/computers/os.html#updating-
 ## 4. Run the bootstrap
 
 ```bash
+make deploy PI_HOST=<hostname or IP>
+```
+
+Or run the curl bootstrap directly on the Pi:
+
+```bash
 curl -fsSL https://raw.githubusercontent.com/tarasfilonenko/cyberdeck/main/os/scripts/install.sh | sudo bash
 ```
 
-This clones the repo to `/opt/cyberdeck` and runs `setup.sh`. Safe to re-run — it pulls the latest changes if the repo is already present.
+This clones the repo to `/opt/cyberdeck` and runs `setup.sh`, which:
+- Configures the display, I2C, and USB hub
+- Updates the EEPROM and sets USB as the primary boot device
+- Clones the SD card to the SSD and expands the root filesystem (if SSD is connected)
 
-## 5. Reboot
+Safe to re-run — idempotent at every step.
+
+## 5. Reboot and switch to SSD
 
 ```bash
 sudo reboot
 ```
+
+The Pi reboots from the SSD. Confirm:
+
+```bash
+findmnt / | grep -o 'sd[a-z]\|mmcblk[0-9]'
+# expect: sda (SSD)
+```
+
+Once confirmed, shut down and remove the SD card:
+
+```bash
+sudo shutdown -h now
+```
+
+The Pi will boot from the SSD only from this point on. See [docs/ssd.md](../docs/ssd.md) for details and troubleshooting.
 
 ## What the setup script does
 
@@ -66,6 +94,7 @@ sudo reboot
 | `i2c.sh` | Enables I2C bus and installs `i2c-tools` |
 | `usb-hub.sh` | Installs udev rules, disables USB autosuspend |
 | `usb-boot.sh` | Updates EEPROM and sets USB as primary boot device |
+| `clone-to-ssd.sh` | Clones SD card to SSD and expands root filesystem (skips if no SSD connected or already on SSD) |
 
 All scripts are idempotent — safe to run multiple times.
 

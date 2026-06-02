@@ -20,40 +20,31 @@ The change takes effect on the next reboot.
 
 ## Setup sequence
 
-You do not need to flash the SSD separately. The simplest path is to clone the running SD card to the SSD while the Pi is booted — all configuration, setup, and data comes along for free.
+You do not need to flash the SSD separately. `setup.sh` handles everything: it clones the running SD card to the SSD, so all configuration and data comes along automatically.
 
-### 1. Enable USB boot
+### 1. Connect the SSD
 
-Boot from the SD card and run the bootstrap (if you haven't already):
+Plug the SSD (in its USB enclosure) into one of the Pi's USB 3.0 (blue) ports before running the bootstrap.
+
+### 2. Run the bootstrap
 
 ```bash
 make deploy PI_HOST=<hostname or IP>
 ```
 
-`setup.sh` includes `usb-boot.sh`, which stages the EEPROM update and sets USB as the primary boot device. A reboot is required to activate the EEPROM change — but do the clone first.
+`setup.sh` runs in order:
+- `usb-boot.sh` — updates EEPROM, sets USB as primary boot device
+- `clone-to-ssd.sh` — clones `/dev/mmcblk0` → `/dev/sda`, expands root filesystem
 
-### 2. Clone SD card to SSD
+If no SSD is connected, `clone-to-ssd.sh` skips gracefully and prints a message. Connect the SSD and re-run `make deploy` to clone later.
 
-With the SSD connected via the USB enclosure:
-
-```bash
-sudo dd if=/dev/mmcblk0 of=/dev/sda bs=4M status=progress
-sync
-```
-
-This copies the full SD card — OS, config, everything — to the SSD. Since the SSD (128 GB) is larger than the SD card, expand the root filesystem to use the remaining space:
-
-```bash
-sudo raspi-config nonint do_expand_rootfs
-```
-
-### 3. Reboot from SSD
+### 3. Reboot and confirm
 
 ```bash
 sudo reboot
 ```
 
-The Pi now tries USB first. With the SSD plugged in, it boots from the clone. Confirm:
+The Pi boots from the SSD. Confirm:
 
 ```bash
 findmnt / | grep -o 'sd[a-z]\|mmcblk[0-9]'
@@ -62,13 +53,11 @@ findmnt / | grep -o 'sd[a-z]\|mmcblk[0-9]'
 
 ### 4. Remove the SD card
 
-Once confirmed running from SSD:
-
 ```bash
 sudo shutdown -h now
 ```
 
-Remove the SD card, power on — boots from SSD only.
+Remove the SD card. The Pi boots from the SSD only from this point on.
 
 ## Verifying the setup
 

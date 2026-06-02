@@ -32,4 +32,5 @@ RUN printf '#!/bin/sh\necho "udevadm $*"\n' > /usr/local/bin/udevadm && chmod +x
 RUN mkdir -p /boot/firmware /etc/udev/rules.d
 
 COPY . /cyberdeck
+RUN chmod +x /cyberdeck/os/scripts/*.sh
 WORKDIR /cyberdeck

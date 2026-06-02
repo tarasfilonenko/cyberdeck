@@ -12,8 +12,9 @@ test-env: test-deps
 	@colima status 2>/dev/null | grep -q Running || colima start
 
 # Build image and run all OS tests
+# Build context is .. (repo root) so the container gets the full repo at /cyberdeck
 test: test-env
-	docker build -t cyberdeck-test -f os/tests/Dockerfile .
+	docker build -t cyberdeck-test -f tests/Dockerfile ..
 	docker run --rm cyberdeck-test bats os/tests/
 
 # Run setup on a real Pi over SSH (set PI_HOST=<hostname or IP>)

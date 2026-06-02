@@ -29,27 +29,19 @@ cyberdeck/
     └── *.md          # Per-subsystem documentation
 ```
 
-## Quick Start
+## Setup
 
-Suggested sequence for a fresh build:
-
-1. Flash Raspberry Pi OS (64-bit, Bookworm) onto an SD card using [Raspberry Pi Imager](https://www.raspberrypi.com/software/) — enable SSH, set hostname/username/password in the gear icon
-2. Boot the Pi, SSH in: `ssh <username>@<hostname>.local`
-3. Run the bootstrap: `make deploy PI_HOST=<hostname or IP>`
-
-See [os/README.md](os/README.md) for the full step-by-step guide.
+See [os/README.md](os/README.md) for the full setup guide — flashing the SD card, running the bootstrap, and switching to SSD boot.
 
 ## Make targets
 
+Run from the repo root with `make -C os <target>`, or from the `os/` directory with `make <target>`.
+
 | Target | What it does |
 |--------|-------------|
-| `make deploy PI_HOST=<ip>` | Run setup on a live Pi over SSH |
-| `make test` | Run all bats tests in Docker (starts Colima if needed) |
-| `make test-deps` | Install Colima + Docker via Homebrew |
-
-## OS Setup
-
-See [os/README.md](os/README.md) for full setup instructions.
+| `make -C os deploy PI_HOST=<ip>` | Run setup on a live Pi over SSH |
+| `make -C os test` | Run all bats tests in Docker (starts Colima if needed) |
+| `make -C os test-deps` | Install Colima + Docker via Homebrew |
 
 ## Docs
 
