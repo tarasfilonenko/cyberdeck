@@ -65,6 +65,7 @@ sudo reboot
 | `display.sh` | Sets HDMI output for GeeekPi 10.1" 1024×600 |
 | `i2c.sh` | Enables I2C bus and installs `i2c-tools` |
 | `usb-hub.sh` | Installs udev rules, disables USB autosuspend |
+| `usb-boot.sh` | Updates EEPROM and sets USB as primary boot device |
 
 All scripts are idempotent — safe to run multiple times.
 

@@ -33,6 +33,8 @@ Each script in `os/scripts/` must:
 | Raspberry Pi 4 | SBC |
 | GeeekPi 10.1" 1024×600 HDMI IPS | Display — HDMI video + USB touch |
 | USB-C hub | Central module |
+| M.2 2242 128 GB SATA III SSD | Boot storage — replaces SD card |
+| USB 3.0 M.2 NGFF enclosure (ASM1153E) | SSD-to-USB adapter |
 
 ## What does not belong here
 

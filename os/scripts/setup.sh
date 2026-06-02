@@ -8,5 +8,6 @@ echo "==> Cyberdeck OS bootstrap"
 "$SCRIPT_DIR/display.sh"
 "$SCRIPT_DIR/i2c.sh"
 "$SCRIPT_DIR/usb-hub.sh"
+"$SCRIPT_DIR/usb-boot.sh"
 
 echo "==> Done. Reboot recommended."
