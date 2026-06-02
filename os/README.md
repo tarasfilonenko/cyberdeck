@@ -47,7 +47,7 @@ Reference: https://www.raspberrypi.com/documentation/computers/os.html#updating-
 ## 4. Run the bootstrap
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/tarasfilonenko/cyberdeck/main/os/install.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/tarasfilonenko/cyberdeck/main/os/scripts/install.sh | sudo bash
 ```
 
 This clones the repo to `/opt/cyberdeck` and runs `setup.sh`. Safe to re-run — it pulls the latest changes if the repo is already present.

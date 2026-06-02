@@ -18,4 +18,4 @@ else
   git clone "$REPO_URL" "$INSTALL_DIR"
 fi
 
-exec "$INSTALL_DIR/os/setup.sh"
+exec "$INSTALL_DIR/os/scripts/setup.sh"

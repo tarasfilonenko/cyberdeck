@@ -19,9 +19,9 @@ cyberdeck/
 │   ├── pcb/          # KiCad PCB projects
 │   └── 3d-models/    # Fusion 360 / STL files
 ├── os/               # Raspberry Pi OS setup
-│   ├── setup.sh      # Main bootstrap script
-│   ├── scripts/      # Idempotent configuration scripts
-│   └── config/       # Config files and udev rules
+│   ├── scripts/      # All runnable scripts (install, setup, components)
+│   ├── config/       # Config files and udev rules
+│   └── tests/        # Docker-based bats tests
 ├── firmware/         # Firmware configs for embedded components
 └── docs/
     ├── decisions/    # ADR-style design decision records

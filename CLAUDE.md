@@ -17,7 +17,7 @@ Each script in `os/scripts/` must:
 - Be **idempotent** — safe to run multiple times without side effects
 - Have a corresponding doc in `docs/` explaining what it does, how to verify it worked, and how to troubleshoot
 - Reference the upstream source or documentation it is based on (link in script comments or the corresponding doc)
-- Be listed in the `os/setup.sh` orchestrator and in the table in `os/README.md`
+- Be listed in `os/scripts/setup.sh` and in the table in `os/README.md`
 
 ## Adding docs
 
