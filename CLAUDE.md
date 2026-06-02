@@ -18,6 +18,7 @@ Each script in `os/scripts/` must:
 - Have a corresponding doc in `docs/` explaining what it does, how to verify it worked, and how to troubleshoot
 - Reference the upstream source or documentation it is based on (link in script comments or the corresponding doc)
 - Be listed in `os/scripts/setup.sh` and in the table in `os/README.md`
+- Have corresponding bats tests in `os/tests/` — when a script is added or modified, its tests must be added or updated to match
 
 ## Adding docs
 
