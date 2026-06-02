@@ -1,0 +1,10 @@
+# udev rules for cyberdeck peripherals
+
+# GeeekPi USB touch (HID — kernel handles it, rule ensures permissions)
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="0eef", MODE="0666"
+
+# Meshtastic USB node (SiLabs CP2102)
+SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", SYMLINK+="meshtastic", MODE="0666"
+
+# Generic USB-serial for GPIO/I2C adapters
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", SYMLINK+="ftdi-serial", MODE="0666"

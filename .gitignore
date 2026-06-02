@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+
+# KiCad
+*.bak
+*-bak/
+*.lck
+*-backups/
+fp-info-cache
+
+# Fusion 360 / CAD exports (keep STLs, ignore working files)
+*.f3d
+*.f3z
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Editor
+.vscode/
+*.swp

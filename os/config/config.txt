@@ -1,0 +1,21 @@
+# /boot/firmware/config.txt additions for cyberdeck
+# Append these to the end of your existing config.txt
+# (setup.sh handles this automatically — manual reference only)
+
+# --- Display: GeeekPi 10.1" 1024x600 HDMI IPS ---
+hdmi_force_hotplug=1
+hdmi_cvt=1024 600 60 6 0 0 0
+hdmi_group=2
+hdmi_mode=87
+
+# --- GPU memory ---
+gpu_mem=128
+
+# --- I2C ---
+dtparam=i2c_arm=on
+
+# --- SPI (enable if needed for accessories) ---
+# dtparam=spi=on
+
+# --- UART (enable if needed for serial accessories) ---
+# enable_uart=1
