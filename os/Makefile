@@ -1,6 +1,7 @@
 .PHONY: test test-deps test-env deploy
 
 PI_HOST ?= cyberdeck.local
+PI_USER ?= cyberdeck
 
 # Install test environment (macOS via Homebrew)
 test-deps:
@@ -19,4 +20,4 @@ test: test-env
 
 # Run setup on a real Pi over SSH (set PI_HOST=<hostname or IP>)
 deploy:
-	ssh $(PI_HOST) 'curl -fsSL https://raw.githubusercontent.com/tarasfilonenko/cyberdeck/main/os/scripts/install.sh | sudo bash'
+	ssh $(PI_USER)@$(PI_HOST) 'curl -fsSL https://raw.githubusercontent.com/tarasfilonenko/cyberdeck/main/os/scripts/install.sh | sudo bash'

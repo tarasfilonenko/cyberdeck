@@ -115,7 +115,7 @@ Run from the `os/` directory, or from the repo root with `make -C os <target>`.
 
 | Target | What it does |
 |--------|-------------|
-| `make deploy PI_HOST=<ip>` | Run setup on a live Pi over SSH |
+| `make deploy PI_HOST=<ip> PI_USER=<user>` | Run setup on a live Pi over SSH (default user: `cyberdeck`) |
 | `make test` | Run all bats tests in Docker (starts Colima if needed) |
 | `make test-deps` | Install Colima + Docker via Homebrew |
 
