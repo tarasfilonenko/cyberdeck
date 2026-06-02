@@ -44,21 +44,21 @@ sudo apt-get update && sudo apt-get full-upgrade -y
 
 Reference: https://www.raspberrypi.com/documentation/computers/os.html#updating-and-upgrading-raspberry-pi-os
 
-## 4. Clone this repo
+## 4. Run the bootstrap
 
 ```bash
-sudo apt-get install -y git
-git clone https://github.com/tarasfilonenko/cyberdeck
-cd cyberdeck/os
+curl -fsSL https://raw.githubusercontent.com/tarasfilonenko/cyberdeck/main/os/install.sh | sudo bash
 ```
 
-## 5. Run the setup script
+This clones the repo to `/opt/cyberdeck` and runs `setup.sh`. Safe to re-run — it pulls the latest changes if the repo is already present.
+
+## 5. Reboot
 
 ```bash
-sudo ./setup.sh
+sudo reboot
 ```
 
-This runs each script in `scripts/` in order. All scripts are idempotent — safe to re-run.
+## What the setup script does
 
 | Script | What it does |
 |--------|-------------|
@@ -66,11 +66,7 @@ This runs each script in `scripts/` in order. All scripts are idempotent — saf
 | `i2c.sh` | Enables I2C bus and installs `i2c-tools` |
 | `usb-hub.sh` | Installs udev rules, disables USB autosuspend |
 
-## 6. Reboot
-
-```bash
-sudo reboot
-```
+All scripts are idempotent — safe to run multiple times.
 
 ## Verifying the setup
 
