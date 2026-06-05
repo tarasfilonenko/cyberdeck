@@ -4,6 +4,8 @@
 set -euo pipefail
 
 RETROPIE_SETUP_DIR="${RETROPIE_SETUP_DIR:-/opt/RetroPie-Setup}"
+# RetroPie setup must run as the regular user, not root
+REAL_USER="${SUDO_USER:-$(id -un)}"
 
 if [[ -d /opt/retropie ]]; then
   echo "==> RetroPie already installed — skipping"
@@ -12,15 +14,19 @@ fi
 
 echo "==> Installing RetroPie dependencies..."
 for pkg in git dialog unzip xmlstarlet; do
-  dpkg -s "$pkg" &>/dev/null || sudo apt-get install -y "$pkg"
+  dpkg -s "$pkg" &>/dev/null || apt-get install -y "$pkg"
 done
+
+# Pre-add user to input group so setup doesn't prompt interactively
+usermod -a -G input "$REAL_USER"
 
 echo "==> Cloning RetroPie-Setup..."
 if [[ ! -d "${RETROPIE_SETUP_DIR}" ]]; then
-  sudo git clone --depth=1 https://github.com/RetroPie/RetroPie-Setup.git "${RETROPIE_SETUP_DIR}"
+  git clone --depth=1 https://github.com/RetroPie/RetroPie-Setup.git "${RETROPIE_SETUP_DIR}"
 fi
+chown -R "$REAL_USER" "${RETROPIE_SETUP_DIR}"
 
 echo "==> Running RetroPie basic install (this takes several minutes)..."
-sudo bash "${RETROPIE_SETUP_DIR}/retropie_setup.sh" basic_install
+sudo -u "$REAL_USER" bash "${RETROPIE_SETUP_DIR}/retropie_setup.sh" basic_install
 
 echo "==> RetroPie installed — launch with: emulationstation"

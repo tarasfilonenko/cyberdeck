@@ -12,7 +12,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Fake sudo — scripts run as root in the container so this just passes through
-RUN printf '#!/bin/sh\nexec "$@"\n' > /usr/local/bin/sudo && chmod +x /usr/local/bin/sudo
+# Handle -u <user> flag by skipping it (already root)
+RUN printf '#!/bin/sh\nif [ "$1" = "-u" ]; then shift 2; fi\nexec "$@"\n' > /usr/local/bin/sudo && chmod +x /usr/local/bin/sudo
 
 # raspi-config is Pi-specific; fake do_i2c and do_boot_order
 RUN printf '#!/bin/sh\n\
