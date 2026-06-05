@@ -19,10 +19,11 @@ test: test-env
 	docker run --rm cyberdeck-test bats os/tests/
 
 # Full initial setup: clones repo to /opt/cyberdeck and runs all scripts
-COMMIT := $(shell git rev-parse HEAD)
+COMMIT       := $(shell git rev-parse HEAD)
+COMMIT_SHORT := $(shell git rev-parse --short HEAD)
 
 deploy:
-	@echo "==> Deploying $(COMMIT)"
+	@echo "==> Deploying $(COMMIT_SHORT)"
 	ssh -t $(PI_USER)@$(PI_HOST) 'curl -fsSL https://raw.githubusercontent.com/tarasfilonenko/cyberdeck/$(COMMIT)/os/scripts/install.sh | sudo bash'
 
 # Run a single script from the already-cloned repo: make deploy-display, make deploy-i2c, etc.
