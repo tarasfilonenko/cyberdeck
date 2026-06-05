@@ -50,6 +50,24 @@ else
   fail "usb-boot: USB boot order not set (reboot may be pending)"
 fi
 
+# NAS (optional — only checked if configured)
+if [[ -f /etc/cyberdeck/nas.conf ]]; then
+  # shellcheck source=/dev/null
+  source /etc/cyberdeck/nas.conf
+  [[ -f /etc/cyberdeck/nas.creds ]] \
+    && ok "nas: credentials file exists" \
+    || fail "nas: credentials file missing"
+  [[ "$(stat -c %a /etc/cyberdeck/nas.creds 2>/dev/null)" == "600" ]] \
+    && ok "nas: credentials file mode 600" \
+    || fail "nas: credentials file has wrong permissions"
+  NAS_CREDS=$(grep "password=" /etc/cyberdeck/nas.creds | cut -d= -f2)
+  if smbclient -L "//${NAS_HOST}" -U "${NAS_USER}%${NAS_CREDS}" &>/dev/null; then
+    ok "nas: connection to ${NAS_HOST} successful"
+  else
+    fail "nas: cannot connect to ${NAS_HOST}"
+  fi
+fi
+
 # Storage
 ROOT_SIZE=$(df -h / | awk 'NR==2 {print $2}')
 ROOT_USED=$(df -h / | awk 'NR==2 {print $3}')
