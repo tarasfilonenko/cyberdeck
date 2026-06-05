@@ -28,7 +28,7 @@ deploy:
 
 # Pull latest scripts from GitHub onto the Pi
 sync:
-	ssh $(PI_USER)@$(PI_HOST) 'cd /opt/cyberdeck && git fetch origin && git reset --hard origin/$(COMMIT) && chmod +x os/scripts/*.sh'
+	ssh $(PI_USER)@$(PI_HOST) 'curl -fsSL https://raw.githubusercontent.com/tarasfilonenko/cyberdeck/$(COMMIT)/os/scripts/install.sh | sudo env SYNC_ONLY=1 bash'
 
 # Run a single script — syncs first to ensure latest version is on the Pi
 deploy-%: sync
