@@ -20,4 +20,6 @@ fi
 
 chmod +x "$INSTALL_DIR"/os/scripts/*.sh
 
+echo "==> Version: $(git -C "$INSTALL_DIR" rev-parse --short HEAD)"
+
 exec "$INSTALL_DIR/os/scripts/setup.sh"

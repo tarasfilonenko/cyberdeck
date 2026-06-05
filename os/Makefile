@@ -1,4 +1,4 @@
-.PHONY: test test-deps test-env deploy
+.PHONY: test test-deps test-env deploy verify
 
 PI_HOST ?= cyberdeck.local
 PI_USER ?= cyberdeck
@@ -25,3 +25,7 @@ deploy:
 # Run a single script from the already-cloned repo: make deploy-display, make deploy-i2c, etc.
 deploy-%:
 	ssh -t $(PI_USER)@$(PI_HOST) 'sudo /opt/cyberdeck/os/scripts/$*.sh'
+
+# Verify setup on a live Pi
+verify:
+	ssh $(PI_USER)@$(PI_HOST) 'bash /opt/cyberdeck/os/scripts/verify.sh'
