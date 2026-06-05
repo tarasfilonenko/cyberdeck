@@ -36,7 +36,8 @@ echo "==> Expanding root filesystem to fill SSD..."
 # Resize partition and filesystem directly on the SSD while still booted from SD.
 # raspi-config do_expand_rootfs would expand the SD card instead.
 sudo parted -s "${SSD_DEV}" resizepart 2 100%
-sudo e2fsck -fy "${SSD_DEV}2"
+# e2fsck exits 1 when it corrects errors (expected after a fresh clone) — treat 0 and 1 as success
+sudo e2fsck -fy "${SSD_DEV}2" || { RC=$?; [ $RC -le 1 ] || exit $RC; }
 sudo resize2fs "${SSD_DEV}2"
 
 echo "==> Clone complete — reboot to start from SSD, then remove the SD card"
