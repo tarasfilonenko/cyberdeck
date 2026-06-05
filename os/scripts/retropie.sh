@@ -7,7 +7,7 @@ RETROPIE_SETUP_DIR="${RETROPIE_SETUP_DIR:-/opt/RetroPie-Setup}"
 # RetroPie setup must run as the regular user, not root
 REAL_USER="${SUDO_USER:-$(id -un)}"
 
-if [[ -d /opt/retropie ]]; then
+if command -v emulationstation &>/dev/null; then
   echo "==> RetroPie already installed — skipping"
   exit 0
 fi

@@ -1,19 +1,20 @@
 #!/usr/bin/env bats
 
 SCRIPT=/cyberdeck/os/scripts/retropie.sh
+FAKE_ES=/usr/local/bin/emulationstation
 
 teardown() {
-  rm -rf /opt/retropie
+  rm -f "$FAKE_ES"
 }
 
 @test "retropie: exits 0 when already installed" {
-  mkdir -p /opt/retropie
+  printf '#!/bin/sh\n' > "$FAKE_ES" && chmod +x "$FAKE_ES"
   run "$SCRIPT"
   [ "$status" -eq 0 ]
 }
 
 @test "retropie: prints skip message when already installed" {
-  mkdir -p /opt/retropie
+  printf '#!/bin/sh\n' > "$FAKE_ES" && chmod +x "$FAKE_ES"
   run "$SCRIPT"
   [[ "$output" == *"already installed"* ]]
 }
