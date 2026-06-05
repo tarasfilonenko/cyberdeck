@@ -12,6 +12,7 @@ fi
 
 if [[ -d "$INSTALL_DIR/.git" ]]; then
   echo "==> Repo already cloned, pulling latest"
+  git -C "$INSTALL_DIR" reset --hard HEAD
   git -C "$INSTALL_DIR" pull
 else
   echo "==> Cloning $REPO_URL to $INSTALL_DIR"
