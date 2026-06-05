@@ -50,6 +50,11 @@ else
   fail "usb-boot: USB boot order not set (reboot may be pending)"
 fi
 
+# Storage
+ROOT_SIZE=$(df -h / | awk 'NR==2 {print $2}')
+ROOT_USED=$(df -h / | awk 'NR==2 {print $3}')
+ok "storage: ${ROOT_USED} used of ${ROOT_SIZE} on /"
+
 echo ""
 if [[ "$FAILED" -eq 0 ]]; then
   echo "==> All checks passed"
