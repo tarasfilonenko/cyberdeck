@@ -24,6 +24,13 @@ if [ "$1" = "nonint" ] && [ "$2" = "do_boot_order" ]; then\n\
   mkdir -p /var/lib/raspi-config\n\
   echo "BOOT_ORDER=$3" > /var/lib/raspi-config/boot-order\n\
 fi\n\
+if [ "$1" = "nonint" ] && [ "$2" = "do_vnc" ]; then\n\
+  mkdir -p /var/lib/raspi-config\n\
+  echo "0" > /var/lib/raspi-config/vnc\n\
+fi\n\
+if [ "$1" = "nonint" ] && [ "$2" = "get_vnc" ]; then\n\
+  cat /var/lib/raspi-config/vnc 2>/dev/null || echo "1"\n\
+fi\n\
 echo "raspi-config $*"\n' > /usr/local/bin/raspi-config && chmod +x /usr/local/bin/raspi-config
 
 # rpi-eeprom-update is Pi-specific; fake it as a no-op

@@ -3,7 +3,8 @@
 # Reference: https://www.raspberrypi.com/documentation/computers/remote-access.html#vnc
 set -euo pipefail
 
-if sudo raspi-config nonint get_vnc 2>/dev/null | grep -q "^0$"; then
+VNC_STATE=$(sudo raspi-config nonint get_vnc 2>/dev/null || true)
+if echo "$VNC_STATE" | grep -q "^0"; then
   echo "==> VNC already enabled — skipping"
   exit 0
 fi

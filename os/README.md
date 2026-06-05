@@ -102,6 +102,7 @@ The Pi will boot from the SSD only from this point on. See [docs/ssd.md](../docs
 | Script | What it does |
 |--------|-------------|
 | `retropie.sh` | Installs RetroPie (EmulationStation + RetroArch) on top of Raspberry Pi OS |
+| `vnc.sh` | Enables RealVNC server on port 5900 |
 
 All scripts are idempotent — safe to run multiple times.
 
