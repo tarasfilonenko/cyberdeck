@@ -19,25 +19,18 @@ fi
 NAS_HOST="${NAS_HOST:-}"
 NAS_USER="${NAS_USER:-}"
 NAS_PASS="${NAS_PASS:-}"
-NAS_TEST_SHARE="${NAS_TEST_SHARE:-}"
 
-[[ -n "$NAS_HOST" ]]       || read -r -p "NAS hostname or IP: " NAS_HOST
-[[ -n "$NAS_USER" ]]       || read -r -p "Username: " NAS_USER
-[[ -n "$NAS_PASS" ]]       || { read -r -s -p "Password: " NAS_PASS; echo; }
-[[ -n "$NAS_TEST_SHARE" ]] || read -r -p "Share name to test connection (e.g. backup): " NAS_TEST_SHARE
+[[ -n "$NAS_HOST" ]] || read -r -p "NAS hostname or IP: " NAS_HOST
+[[ -n "$NAS_USER" ]] || read -r -p "Username: " NAS_USER
+[[ -n "$NAS_PASS" ]] || { read -r -s -p "Password: " NAS_PASS; echo; }
 
-dpkg -s cifs-utils &>/dev/null || apt-get install -y cifs-utils
+dpkg -s smbclient &>/dev/null || apt-get install -y smbclient
 
-echo "==> Testing connection to //${NAS_HOST}/${NAS_TEST_SHARE}..."
-TEST_MOUNT=$(mktemp -d)
-if mount -t cifs "//${NAS_HOST}/${NAS_TEST_SHARE}" "$TEST_MOUNT" \
-    -o "username=${NAS_USER},password=${NAS_PASS}" 2>/dev/null; then
-  umount "$TEST_MOUNT"
-  rmdir "$TEST_MOUNT"
-  echo "==> Connection successful"
+echo "==> Testing credentials on ${NAS_HOST}..."
+if smbclient -L "//${NAS_HOST}" -U "${NAS_USER}%${NAS_PASS}" &>/dev/null; then
+  echo "==> Credentials valid"
 else
-  rmdir "$TEST_MOUNT"
-  echo "==> Connection failed — check hostname, share name, and credentials"
+  echo "==> Authentication failed — check hostname and credentials"
   exit 1
 fi
 

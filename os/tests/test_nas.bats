@@ -4,17 +4,15 @@ SCRIPT=/cyberdeck/os/scripts/nas.sh
 
 setup() {
   FAKE_BIN=$(mktemp -d)
-  # Default: mount succeeds
-  printf '#!/bin/sh\nexit 0\n' > "$FAKE_BIN/mount"
-  printf '#!/bin/sh\nexit 0\n' > "$FAKE_BIN/umount"
-  chmod +x "$FAKE_BIN/mount" "$FAKE_BIN/umount"
+  # Default: smbclient succeeds (valid credentials)
+  printf '#!/bin/sh\nexit 0\n' > "$FAKE_BIN/smbclient"
+  chmod +x "$FAKE_BIN/smbclient"
   export FAKE_BIN
   export PATH="$FAKE_BIN:$PATH"
   # Avoid prompts
   export NAS_HOST="nas.local"
   export NAS_USER="testuser"
   export NAS_PASS="testpass"
-  export NAS_TEST_SHARE="backup"
   rm -f /etc/cyberdeck/nas.conf /etc/cyberdeck/nas.creds
 }
 
@@ -37,7 +35,7 @@ teardown() {
   [[ "$output" == *"already configured"* ]]
 }
 
-@test "nas: exits 0 on successful connection" {
+@test "nas: exits 0 on valid credentials" {
   run "$SCRIPT"
   [ "$status" -eq 0 ]
 }
@@ -58,12 +56,12 @@ teardown() {
   [ "$(stat -c %a /etc/cyberdeck/nas.creds)" = "600" ]
 }
 
-@test "nas: exits 1 on failed connection" {
-  printf '#!/bin/sh\nexit 1\n' > "$FAKE_BIN/mount"
-  chmod +x "$FAKE_BIN/mount"
+@test "nas: exits 1 on failed authentication" {
+  printf '#!/bin/sh\nexit 1\n' > "$FAKE_BIN/smbclient"
+  chmod +x "$FAKE_BIN/smbclient"
   run "$SCRIPT"
   [ "$status" -eq 1 ]
-  [[ "$output" == *"failed"* ]]
+  [[ "$output" == *"Authentication failed"* ]]
 }
 
 @test "nas: FORCE=1 reconfigures even when already configured" {

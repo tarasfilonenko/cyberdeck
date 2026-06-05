@@ -1,43 +1,68 @@
-# Backup
+# NAS Integration
 
-Planned backup setup using rsync to a local NAS.
+Planned integration with a local NAS for game storage and backups.
 
-## What to back up
+## Architecture
+
+```
+nas.sh               — configure NAS connection once (prompts, tests, saves credentials)
+  ├── backup.sh      — rsync key directories to NAS
+  └── retropie-nas.sh — mount ROM library from NAS
+```
+
+Run order:
+1. `make deploy-nas` — sets up shared NAS config
+2. `make deploy-backup` and/or `make deploy-retropie-nas` independently after
+
+## nas.sh (shared NAS setup)
+
+Prompts for NAS details (or accepts as env vars: `NAS_HOST`, `NAS_SHARE`, `NAS_USER`, `NAS_PASS`):
+- Installs `cifs-utils`
+- Tests the connection by mounting temporarily
+- Saves config to `/etc/cyberdeck/nas.conf`
+- Saves credentials to `/etc/cyberdeck/nas.creds` (mode 600)
+
+Idempotent — skips if already configured. Use `FORCE=1` to reconfigure.
+
+## backup.sh
+
+Reads `/etc/cyberdeck/nas.conf` (requires `make deploy-nas` first).
+
+Backs up:
 
 | Path | Contents |
 |------|----------|
 | `/home/cyberdeck/` | Personal files and dotfiles |
-| `/home/cyberdeck/RetroPie/` | ROMs, save files, BIOS |
+| `/home/cyberdeck/RetroPie/` | Save files, BIOS |
 | `/opt/retropie/configs/` | Per-emulator configs and save states |
 
 OS configuration does **not** need to be backed up — `make deploy` recreates it from the repo.
 
-## Planned setup
+Automated via systemd timer or cron (daily).
 
-`os/scripts/backup.sh` will:
+## retropie-nas.sh
 
-1. Prompt for NAS details (or accept as env vars: `NAS_HOST`, `NAS_SHARE`, `NAS_USER`, `NAS_PASS`)
-2. Install `cifs-utils` if needed
-3. Mount the share as a connection test
-4. Save credentials to `/etc/cyberdeck/nas-backup.creds` (mode 600)
-5. Save config to `/etc/cyberdeck/backup.conf`
+Reads `/etc/cyberdeck/nas.conf` (requires `make deploy-nas` first).
 
-Run via `make deploy-backup`.
+Mounts the NAS ROM library to `/home/cyberdeck/RetroPie/roms/` via fstab with `_netdev` so it auto-mounts on boot after network is up:
+
+```
+//<NAS_HOST>/<SHARE>/roms /home/cyberdeck/RetroPie/roms cifs credentials=/etc/cyberdeck/nas.creds,uid=cyberdeck,gid=cyberdeck,_netdev 0 0
+```
+
+ROMs stay on the NAS — no SSD space used, accessible from any device on the network.
 
 ## Restore flow
 
-1. Flash a fresh SD card and run `make deploy` — reinstalls all OS config
+1. Flash SD, run `make deploy` — reinstalls all OS config
 2. Run `make deploy-retropie` — reinstalls RetroPie
-3. Mount the NAS share and rsync data back:
-
-```bash
-mount -t cifs //<NAS_HOST>/<NAS_SHARE> /mnt/nas-backup -o credentials=/etc/cyberdeck/nas-backup.creds
-rsync -av /mnt/nas-backup/home/ /home/cyberdeck/
-rsync -av /mnt/nas-backup/retropie-configs/ /opt/retropie/configs/
-```
+3. Run `make deploy-nas` — reconnects to NAS
+4. Run `make deploy-retropie-nas` — ROMs available immediately
+5. Run `make deploy-backup` and restore from latest backup snapshot
 
 ## Not yet implemented
 
-- `backup.sh` script
-- rsync automation (cron or systemd timer)
-- Retention policy
+- `nas.sh`
+- `backup.sh`
+- `retropie-nas.sh`
+- Backup retention policy
