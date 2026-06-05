@@ -124,7 +124,8 @@ Run from the repo root or the `os/` directory — the root `Makefile` forwards a
 | Target | What it does |
 |--------|-------------|
 | `make deploy PI_HOST=<ip> PI_USER=<user>` | Full initial setup: clones repo to `/opt/cyberdeck` and runs all scripts (default user: `cyberdeck`) |
-| `make deploy-<script> PI_HOST=<ip>` | Run a single script on the Pi — e.g. `make deploy-display` or `make deploy-docker` (requires prior `make deploy`) |
+| `make sync PI_HOST=<ip>` | Pull latest scripts from GitHub onto the Pi (run before `deploy-<script>` targets) |
+| `make deploy-<script> PI_HOST=<ip>` | Sync and run a single script on the Pi — e.g. `make deploy-vnc` or `make deploy-retropie` |
 | `make verify PI_HOST=<ip>` | Check setup on a live Pi — prints ok/FAIL for each component |
 | `make test` | Run all bats tests in Docker (starts Colima if needed) |
 | `make test-deps` | Install Colima + Docker via Homebrew |
