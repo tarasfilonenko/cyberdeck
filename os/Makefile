@@ -20,6 +20,7 @@ test: test-env
 
 # Full initial setup: clones repo to /opt/cyberdeck and runs all scripts
 deploy:
+	@echo "==> Deploying $(shell git rev-parse --short HEAD)"
 	ssh -t $(PI_USER)@$(PI_HOST) 'curl -fsSL https://raw.githubusercontent.com/tarasfilonenko/cyberdeck/main/os/scripts/install.sh | sudo bash'
 
 # Run a single script from the already-cloned repo: make deploy-display, make deploy-i2c, etc.
