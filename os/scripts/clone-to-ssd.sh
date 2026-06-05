@@ -33,6 +33,9 @@ sudo dd if="${SD_DEV}" of="${SSD_DEV}" bs=4M status=progress
 sync
 
 echo "==> Expanding root filesystem to fill SSD..."
-sudo raspi-config nonint do_expand_rootfs
+# Resize partition and filesystem directly on the SSD while still booted from SD.
+# raspi-config do_expand_rootfs would expand the SD card instead.
+sudo parted -s "${SSD_DEV}" resizepart 2 100%
+sudo resize2fs "${SSD_DEV}2"
 
 echo "==> Clone complete — reboot to start from SSD, then remove the SD card"

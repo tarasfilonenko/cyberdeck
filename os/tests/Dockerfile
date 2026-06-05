@@ -3,8 +3,10 @@ FROM debian:bookworm
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bats \
     dialog \
+    e2fsprogs \
     git \
     i2c-tools \
+    parted \
     unzip \
     xmlstarlet \
     && rm -rf /var/lib/apt/lists/*

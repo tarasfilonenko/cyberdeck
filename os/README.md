@@ -5,7 +5,7 @@ Step-by-step guide to configure Raspberry Pi OS for the cyberdeck.
 ## Prerequisites
 
 - Raspberry Pi 4 (any RAM variant)
-- microSD card (16 GB minimum, 32 GB+ recommended) or USB SSD
+- microSD card (16 GB recommended — cloning to SSD copies the entire card regardless of used space, so larger cards mean longer clone times)
 - Another computer to flash the image
 
 ## 1. Flash Raspberry Pi OS
@@ -71,17 +71,16 @@ Safe to re-run — idempotent at every step.
 sudo reboot
 ```
 
-The Pi reboots from the SSD. Confirm:
+The Pi reboots from the SSD. Confirm everything is configured correctly:
 
 ```bash
-findmnt / | grep -o 'sd[a-z]\|mmcblk[0-9]'
-# expect: sda (SSD)
+make verify PI_HOST=<hostname or IP> PI_USER=<username>
 ```
 
-Once confirmed, shut down and remove the SD card:
+Once all checks pass, shut down and remove the SD card:
 
 ```bash
-sudo shutdown -h now
+ssh <username>@<hostname>.local 'sudo shutdown -h now'
 ```
 
 The Pi will boot from the SSD only from this point on. See [docs/ssd.md](../docs/ssd.md) for details and troubleshooting.
