@@ -30,4 +30,20 @@ echo "==> Running RetroPie basic install (this takes several minutes)..."
 export SUDO_USER="$REAL_USER"
 cd "${RETROPIE_SETUP_DIR}" && bash retropie_packages.sh setup basic_install
 
+echo "==> Adding desktop shortcut..."
+DESKTOP_DIR="/home/${REAL_USER}/Desktop"
+mkdir -p "$DESKTOP_DIR"
+cat > "$DESKTOP_DIR/emulationstation.desktop" << 'EOF'
+[Desktop Entry]
+Name=EmulationStation
+Comment=Launch RetroPie
+Exec=emulationstation
+Icon=/opt/retropie/supplementary/EmulationStation/resources/logo.svg
+Terminal=false
+Type=Application
+Categories=Game;
+EOF
+chmod +x "$DESKTOP_DIR/emulationstation.desktop"
+chown "$REAL_USER:$REAL_USER" "$DESKTOP_DIR/emulationstation.desktop"
+
 echo "==> RetroPie installed — launch with: emulationstation"
