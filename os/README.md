@@ -126,6 +126,7 @@ Run from the repo root or the `os/` directory — the root `Makefile` forwards a
 | `make deploy PI_HOST=<ip> PI_USER=<user>` | Full initial setup: clones repo to `/opt/cyberdeck` and runs all scripts (default user: `cyberdeck`) |
 | `make sync PI_HOST=<ip>` | Pull latest scripts from GitHub onto the Pi (run before `deploy-<script>` targets) |
 | `make deploy-<script> PI_HOST=<ip>` | Sync and run a single script on the Pi — e.g. `make deploy-vnc` or `make deploy-retropie` |
+| `make force-deploy-<script> PI_HOST=<ip>` | Same as above but passes `FORCE=1` — re-runs even if already installed (only applies to scripts that support it, e.g. `retropie.sh`) |
 | `make verify PI_HOST=<ip>` | Check setup on a live Pi — prints ok/FAIL for each component |
 | `make test` | Run all bats tests in Docker (starts Colima if needed) |
 | `make test-deps` | Install Colima + Docker via Homebrew |

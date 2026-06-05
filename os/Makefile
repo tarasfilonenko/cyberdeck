@@ -34,6 +34,10 @@ sync:
 deploy-%: sync
 	ssh -t $(PI_USER)@$(PI_HOST) 'sudo /opt/cyberdeck/os/scripts/$*.sh'
 
+# Force re-run a script even if already installed: make force-deploy-retropie
+force-deploy-%: sync
+	ssh -t $(PI_USER)@$(PI_HOST) 'sudo env FORCE=1 /opt/cyberdeck/os/scripts/$*.sh'
+
 # Verify setup on a live Pi
 verify:
 	ssh $(PI_USER)@$(PI_HOST) 'bash /opt/cyberdeck/os/scripts/verify.sh'

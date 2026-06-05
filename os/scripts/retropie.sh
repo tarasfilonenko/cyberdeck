@@ -7,8 +7,8 @@ RETROPIE_SETUP_DIR="${RETROPIE_SETUP_DIR:-/opt/RetroPie-Setup}"
 # RetroPie setup must run as the regular user, not root
 REAL_USER="${SUDO_USER:-$(id -un)}"
 
-if command -v emulationstation &>/dev/null; then
-  echo "==> RetroPie already installed — skipping"
+if command -v emulationstation &>/dev/null && [[ "${FORCE:-}" != "1" ]]; then
+  echo "==> RetroPie already installed — skipping (use FORCE=1 to reinstall)"
   exit 0
 fi
 
@@ -27,6 +27,6 @@ fi
 chown -R "$REAL_USER" "${RETROPIE_SETUP_DIR}"
 
 echo "==> Running RetroPie basic install (this takes several minutes)..."
-SUDO_USER="$REAL_USER" bash "${RETROPIE_SETUP_DIR}/retropie_setup.sh" basic_install
+SUDO_USER="$REAL_USER" __nodialog=1 bash "${RETROPIE_SETUP_DIR}/retropie_setup.sh" basic_install
 
 echo "==> RetroPie installed — launch with: emulationstation"
