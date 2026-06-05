@@ -88,6 +88,8 @@ The Pi will boot from the SSD only from this point on. See [docs/ssd.md](../docs
 
 ## What the setup script does
 
+**Core setup scripts** — run automatically by `make deploy`:
+
 | Script | What it does |
 |--------|-------------|
 | `display.sh` | Sets HDMI output for GeeekPi 10.1" 1024×600 |
@@ -95,6 +97,12 @@ The Pi will boot from the SSD only from this point on. See [docs/ssd.md](../docs
 | `usb-hub.sh` | Installs udev rules, disables USB autosuspend |
 | `usb-boot.sh` | Updates EEPROM and sets USB as primary boot device |
 | `clone-to-ssd.sh` | Clones SD card to SSD and expands root filesystem (skips if no SSD connected or already on SSD) |
+
+**Optional software scripts** — run on demand via `make deploy-<script>`:
+
+| Script | What it does |
+|--------|-------------|
+| `retropie.sh` | Installs RetroPie (EmulationStation + RetroArch) on top of Raspberry Pi OS |
 
 All scripts are idempotent — safe to run multiple times.
 

@@ -2,8 +2,11 @@ FROM debian:bookworm
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bats \
+    dialog \
     git \
     i2c-tools \
+    unzip \
+    xmlstarlet \
     && rm -rf /var/lib/apt/lists/*
 
 # Fake sudo — scripts run as root in the container so this just passes through

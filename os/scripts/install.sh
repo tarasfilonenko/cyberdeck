@@ -18,4 +18,6 @@ else
   git clone "$REPO_URL" "$INSTALL_DIR"
 fi
 
+chmod +x "$INSTALL_DIR"/os/scripts/*.sh
+
 exec "$INSTALL_DIR/os/scripts/setup.sh"

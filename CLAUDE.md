@@ -18,7 +18,11 @@ Each script in `os/scripts/` must:
 - Have corresponding bats tests in `os/tests/` — add or update tests when the script changes
 - Have a corresponding doc in `docs/` explaining what it does, how to verify it worked, and how to troubleshoot
 - Reference the upstream source or documentation it is based on (link in script comments or the corresponding doc)
-- Be listed in `os/scripts/setup.sh` and in the table in `os/README.md`
+- Be listed in the table in `os/README.md`
+
+**Core setup scripts** (display, I2C, USB hub, USB boot, SSD clone) must also be listed in `os/scripts/setup.sh` — these run automatically on first deploy.
+
+**Optional software scripts** (e.g. RetroPie) must NOT be added to `setup.sh` — they are run on demand via `make deploy-<script>`.
 
 ## Adding docs
 
