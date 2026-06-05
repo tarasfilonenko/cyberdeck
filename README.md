@@ -40,6 +40,7 @@ See [os/README.md](os/README.md) for the full setup guide — flashing the SD ca
 - [I2C](docs/i2c.md)
 - [Boot config](docs/boot.md)
 - [SSD boot](docs/ssd.md)
+- [Backup](docs/backup.md)
 
 ## Decisions
 
