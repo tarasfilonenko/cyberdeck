@@ -27,6 +27,7 @@ fi
 chown -R "$REAL_USER" "${RETROPIE_SETUP_DIR}"
 
 echo "==> Running RetroPie basic install (this takes several minutes)..."
-SUDO_USER="$REAL_USER" __nodialog=1 bash "${RETROPIE_SETUP_DIR}/retropie_setup.sh" basic_install
+export SUDO_USER="$REAL_USER"
+cd "${RETROPIE_SETUP_DIR}" && bash retropie_packages.sh setup basic_install
 
 echo "==> RetroPie installed — launch with: emulationstation"
