@@ -34,6 +34,10 @@ fi\n\
 if [ "$1" = "nonint" ] && [ "$2" = "get_vnc" ]; then\n\
   cat /var/lib/raspi-config/vnc 2>/dev/null || echo "1"\n\
 fi\n\
+if [ "$1" = "nonint" ] && [ "$2" = "do_wayland" ]; then\n\
+  mkdir -p /var/lib/raspi-config\n\
+  echo "$3" > /var/lib/raspi-config/wayland\n\
+fi\n\
 echo "raspi-config $*"\n' > /usr/local/bin/raspi-config && chmod +x /usr/local/bin/raspi-config
 
 # rpi-eeprom-update is Pi-specific; fake it as a no-op

@@ -36,6 +36,9 @@ if ! command -v emulationstation &>/dev/null; then
 fi
 echo "==> RetroPie core installed (some optional packages may have failed — run make deploy-retropie-emulators to install emulators)"
 
+echo "==> Switching display server to X11 (required for RetroPie)..."
+sudo raspi-config nonint do_wayland W1
+
 echo "==> Adding desktop shortcut..."
 DESKTOP_DIR="/home/${REAL_USER}/Desktop"
 mkdir -p "$DESKTOP_DIR"
@@ -44,7 +47,7 @@ cat > "$DESKTOP_DIR/emulationstation.desktop" << 'EOF'
 Name=EmulationStation
 Comment=Launch RetroPie
 Exec=emulationstation
-Icon=/opt/retropie/supplementary/EmulationStation/resources/logo.svg
+Icon=input-gaming
 Terminal=false
 Type=Application
 Categories=Game;
