@@ -2,12 +2,12 @@
 
 ## What it does
 
-Enables temperature-controlled fan operation for the GeeekPi Armor Lite heatsink (PWM fan). The fan turns on at 55 °C and off once the CPU cools below ~45 °C (10 °C hysteresis built into the `gpio-fan` overlay).
+Enables temperature-controlled fan operation for the GeeekPi Armor Lite heatsink (PWM fan). The fan turns on at 60 °C and off once the CPU cools below ~45 °C (10 °C hysteresis built into the `gpio-fan` overlay).
 
 The script appends one line to `/boot/firmware/config.txt`:
 
 ```
-dtoverlay=gpio-fan,gpiopin=14,temp=55000
+dtoverlay=gpio-fan,gpiopin=14,temp=60000
 ```
 
 `temp` is in millidegrees Celsius — `55000` = 55 °C.

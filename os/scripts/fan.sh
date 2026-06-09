@@ -8,10 +8,9 @@ CONFIG=/boot/firmware/config.txt
 
 echo "==> Configuring fan (GeeekPi Armor Lite)"
 
-if ! grep -q "dtoverlay=gpio-fan" "$CONFIG"; then
-  cat <<'EOF' | sudo tee -a "$CONFIG"
-dtoverlay=gpio-fan,gpiopin=14,temp=55000
-EOF
-fi
+# Remove any existing gpio-fan lines (raspi-config may have added its own)
+# then write the single canonical entry — collapses duplicates on re-run
+sudo sed -i '/dtoverlay=gpio-fan/d' "$CONFIG"
+echo "dtoverlay=gpio-fan,gpiopin=14,temp=60000" | sudo tee -a "$CONFIG" > /dev/null
 
-echo "==> Fan configured — turns on at 55°C (reboot to apply)"
+echo "==> Fan configured — turns on at 60°C (reboot to apply)"
