@@ -95,6 +95,7 @@ The Pi will boot from the SSD only from this point on. See [docs/ssd.md](../docs
 | `i2c.sh` | Enables I2C bus and installs `i2c-tools` |
 | `usb-hub.sh` | Installs udev rules, disables USB autosuspend |
 | `usb-boot.sh` | Updates EEPROM and sets USB as primary boot device |
+| `fan.sh` | Enables temperature-controlled fan for GeeekPi Armor Lite heatsink (GPIO14, on at 55 °C) |
 | `clone-to-ssd.sh` | Clones SD card to SSD and expands root filesystem (skips if no SSD connected or already on SSD) |
 
 **Optional software scripts** — run on demand via `make deploy-<script>`:

@@ -8,6 +8,7 @@ DIY cyberdeck built around a Raspberry Pi 4. This repo tracks everything: OS con
 - **Display:** GeeekPi 10.1" 1024×600 HDMI IPS (HDMI video + USB touch)
 - **Hub:** USB-C hub as central module
 - **Storage:** M.2 2242 128 GB SATA III SSD + USB 3.0 M.2 NGFF enclosure (ASM1153E)
+- **Cooling:** GeeekPi Armor Lite heatsink with PWM fan (GPIO14)
 - **I2C:** Exposed externally for peripheral modules
 - **GPIO:** Broken out for accessories
 - **Mounting:** NATO rail for accessories
@@ -41,6 +42,7 @@ See [os/README.md](os/README.md) for the full setup guide — flashing the SD ca
 - [Boot config](docs/boot.md)
 - [SSD boot](docs/ssd.md)
 - [Backup](docs/backup.md)
+- [Fan control](docs/fan.md)
 
 ## Decisions
 

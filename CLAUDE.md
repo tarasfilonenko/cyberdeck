@@ -20,7 +20,7 @@ Each script in `os/scripts/` must:
 - Reference the upstream source or documentation it is based on (link in script comments or the corresponding doc)
 - Be listed in the table in `os/README.md`
 
-**Core setup scripts** (display, I2C, USB hub, USB boot, SSD clone) must also be listed in `os/scripts/setup.sh` — these run automatically on first deploy.
+**Core setup scripts** (display, I2C, USB hub, USB boot, fan, SSD clone) must also be listed in `os/scripts/setup.sh` — these run automatically on first deploy.
 
 **Optional software scripts** (e.g. RetroPie) must NOT be added to `setup.sh` — they are run on demand via `make deploy-<script>`.
 
@@ -39,6 +39,7 @@ Each script in `os/scripts/` must:
 | USB-C hub | Central module |
 | M.2 2242 128 GB SATA III SSD | Boot storage — replaces SD card |
 | USB 3.0 M.2 NGFF enclosure (ASM1153E) | SSD-to-USB adapter |
+| GeeekPi Armor Lite heatsink + PWM fan | Cooling — GPIO14, on at 55 °C |
 
 ## What does not belong here
 
