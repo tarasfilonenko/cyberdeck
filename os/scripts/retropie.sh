@@ -28,7 +28,13 @@ chown -R "$REAL_USER" "${RETROPIE_SETUP_DIR}"
 
 echo "==> Running RetroPie basic install (this takes several minutes)..."
 export SUDO_USER="$REAL_USER"
-cd "${RETROPIE_SETUP_DIR}" && bash retropie_packages.sh setup basic_install
+cd "${RETROPIE_SETUP_DIR}" && bash retropie_packages.sh setup basic_install || true
+
+if ! command -v emulationstation &>/dev/null; then
+  echo "==> ERROR: EmulationStation not installed — basic_install failed"
+  exit 1
+fi
+echo "==> RetroPie core installed (some optional packages may have failed — run make deploy-retropie-emulators to install emulators)"
 
 echo "==> Adding desktop shortcut..."
 DESKTOP_DIR="/home/${REAL_USER}/Desktop"
