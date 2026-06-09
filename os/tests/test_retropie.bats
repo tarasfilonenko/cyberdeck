@@ -21,7 +21,9 @@ teardown() {
 
 @test "retropie: runs retropie_packages.sh setup basic_install" {
   SETUP_DIR=$(mktemp -d)
-  printf '#!/bin/sh\necho "retropie_packages $*"\n' > "${SETUP_DIR}/retropie_packages.sh"
+  # Fake retropie_packages.sh that also creates the emulationstation binary
+  printf '#!/bin/sh\necho "retropie_packages $*"\nprintf "#!/bin/sh\n" > /usr/local/bin/emulationstation\nchmod +x /usr/local/bin/emulationstation\n' \
+    > "${SETUP_DIR}/retropie_packages.sh"
   chmod +x "${SETUP_DIR}/retropie_packages.sh"
   run env RETROPIE_SETUP_DIR="${SETUP_DIR}" "$SCRIPT"
   [ "$status" -eq 0 ]
