@@ -19,12 +19,13 @@ teardown() {
   [[ "$output" == *"already installed"* ]]
 }
 
-@test "retropie: runs retropie_packages.sh setup basic_install" {
+@test "retropie: installs core packages via retropie_packages.sh" {
   SETUP_DIR=$(mktemp -d)
   printf '#!/bin/sh\necho "retropie_packages $*"\n' > "${SETUP_DIR}/retropie_packages.sh"
   chmod +x "${SETUP_DIR}/retropie_packages.sh"
   run env RETROPIE_SETUP_DIR="${SETUP_DIR}" "$SCRIPT"
   [ "$status" -eq 0 ]
-  [[ "$output" == *"basic_install"* ]]
+  [[ "$output" == *"emulationstation"* ]]
+  [[ "$output" == *"retroarch"* ]]
   rm -rf "${SETUP_DIR}"
 }

@@ -26,9 +26,13 @@ if [[ ! -d "${RETROPIE_SETUP_DIR}" ]]; then
 fi
 chown -R "$REAL_USER" "${RETROPIE_SETUP_DIR}"
 
-echo "==> Running RetroPie basic install (this takes several minutes)..."
+echo "==> Installing RetroPie core (EmulationStation + RetroArch)..."
 export SUDO_USER="$REAL_USER"
-cd "${RETROPIE_SETUP_DIR}" && bash retropie_packages.sh setup basic_install
+cd "${RETROPIE_SETUP_DIR}"
+for pkg in emulationstation retroarch retropiemenu runcommand; do
+  echo "  -> ${pkg}"
+  bash retropie_packages.sh "$pkg" install
+done
 
 echo "==> Adding desktop shortcut..."
 DESKTOP_DIR="/home/${REAL_USER}/Desktop"
