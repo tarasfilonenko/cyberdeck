@@ -39,6 +39,8 @@ fi
 
 echo "//${NAS_HOST}/${NAS_ROMS_SHARE} ${MOUNT_POINT} cifs credentials=${CREDS},uid=${REAL_USER},gid=${REAL_USER},_netdev 0 0" >> "$FSTAB"
 
+systemctl daemon-reload
+
 echo "==> Testing mount..."
 mount "$MOUNT_POINT"
 
