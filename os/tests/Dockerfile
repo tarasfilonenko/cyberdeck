@@ -3,6 +3,7 @@ FROM debian:bookworm
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bats \
     cifs-utils \
+    ddcutil \
     dialog \
     smbclient \
     e2fsprogs \

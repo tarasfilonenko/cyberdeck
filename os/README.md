@@ -106,6 +106,7 @@ The Pi will boot from the SSD only from this point on. See [docs/ssd.md](../docs
 | `retropie-emulators.sh` | Installs emulators: NES, SNES, Mega Drive, GBA, N64, Arcade, DOS, MSX — each failure is non-fatal |
 | `vnc.sh` | Enables RealVNC server on port 5900 |
 | `nas.sh` | Configures shared NAS host and credentials — required before `backup.sh` and `retropie-nas.sh` |
+| `brightness.sh` | Installs `ddcutil` for DDC/CI brightness control over HDMI — requires `i2c.sh` |
 
 All scripts are idempotent — safe to run multiple times.
 
