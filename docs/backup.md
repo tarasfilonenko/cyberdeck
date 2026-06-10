@@ -62,7 +62,5 @@ ROMs stay on the NAS — no SSD space used, accessible from any device on the ne
 
 ## Not yet implemented
 
-- `nas.sh`
 - `backup.sh`
-- `retropie-nas.sh`
 - Backup retention policy
