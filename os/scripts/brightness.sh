@@ -7,8 +7,8 @@ set -euo pipefail
 
 echo "==> Setting up display brightness control (ddcutil)"
 
-if ! dpkg -s ddcutil &>/dev/null; then
-  sudo apt-get install -y ddcutil
+if ! dpkg -s ddcutil &>/dev/null || ! dpkg -s ddcui &>/dev/null; then
+  sudo apt-get install -y ddcutil ddcui
 fi
 
 # Add the invoking user to the i2c group for non-root DDC access

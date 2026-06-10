@@ -4,6 +4,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     bats \
     cifs-utils \
     ddcutil \
+    ddcui \
     dialog \
     smbclient \
     e2fsprogs \

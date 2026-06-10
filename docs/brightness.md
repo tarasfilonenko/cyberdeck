@@ -22,10 +22,18 @@ sudo /opt/cyberdeck/os/scripts/brightness.sh
 ```
 
 The script:
-1. Installs `ddcutil`
+1. Installs `ddcutil` (CLI) and `ddcui` (GUI)
 2. Adds the invoking user to the `i2c` group for non-root access (log out and back in to apply)
 
 ## Usage
+
+Launch the GUI:
+
+```bash
+ddcui
+```
+
+Or use the CLI:
 
 ```bash
 # Confirm the display is detected on the DDC bus
